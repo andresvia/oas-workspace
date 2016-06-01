@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -eu
+
+OASENVTOOL_FILENAME=${OASENVTOOL_FILENAME:-/etc/environment}
+
+get_env_value() {
+  # so unsafe
+  source "$OASENVTOOL_FILENAME"
+  echo "${!environment_name}"
+}
+
+while getopts ":n:v:" opt; do
+  case $opt in
+    n)
+      environment_name="$OPTARG"
+      ;;
+    v)
+      environment_value="$OPTARG"
+      ;;
+  esac
+done
+
+if [ -z "${environment_name}" ]
+then
+  echo "oasenvtool: empty environment name"
+  exit 1
+fi
+
+is_set="false"
+if egrep "^\s*${environment_name}=" "$OASENVTOOL_FILENAME" > /dev/null
+then
+  is_set="true"
+fi
+
+if [ "$is_set" = "true" ] # update, remove or nothing
+then
+  if [ -z "${environment_value}"  ] # remove
+  then
+    sed -i.bak -E "/(^[[:space:]]*${environment_name})=/d" "$OASENVTOOL_FILENAME"
+  elif [ "$(get_env_value)" != "${environment_value}" ] # update
+  then
+    sed -i.bak -E "s|(^[[:space:]]*${environment_name})=.*|\\1=${environment_value}|" "$OASENVTOOL_FILENAME"
+  fi # else nothing
+elif [ ! -z "${environment_value}" ]
+then # create
+  echo "${environment_name}=${environment_value}" >> "$OASENVTOOL_FILENAME"
+fi

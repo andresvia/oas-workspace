@@ -2,7 +2,7 @@
 
 set -eu
 
-oasproj_pkg="https://github.com/andresvia/oasproj/releases/download/v1.0.4/oasproj-1.0.4_travis.35-1.x86_64.rpm"
+oasproj_pkg="https://github.com/andresvia/oasproj/releases/download/v1.0.5/oasproj-1.0.5_travis.37-1.x86_64.rpm"
 
 # instalar el paquete oasproj
 yum install -y "${oasproj_pkg}" || true
@@ -18,7 +18,7 @@ VAGRANT_PROFILE="${VAGRANT_HOME}/.bash_profile"
 if ! grep GOPATH "${VAGRANT_PROFILE}"
 then
   echo "GOPATH=${VAGRANT_HOME}" >> "${VAGRANT_PROFILE}"
-  echo "export GOPATH"          >> "${VAGRANT_PROFILE}"
+  echo "export GOPATH" >> "${VAGRANT_PROFILE}"
 fi
 
 # copia los secretos y configuraciones escenciales del host del usuario al ambiente de desarrollo
