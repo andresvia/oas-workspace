@@ -18,7 +18,7 @@ then
   then
     extra_params="${extra_params} -s ${HOST_SHELL}"
   fi
-  if ! awk "$$3==\"${HOST_UID}\"{exit 1}" /etc/passwd > /dev/null # si uid del host no existe lo usamos
+  if awk "\$3==${HOST_UID}{exit 1}" /etc/passwd > /dev/null # si uid del host no existe lo usamos
   then
     extra_params="${extra_params} -u ${HOST_UID}"
   fi
