@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -eu
+
+echo "Vagrant necesita poder ejecutar los siguientes comandos con privilegios de administrador (sudo)"
+echo "/usr/bin/sed y /usr/bin/tee"
+
+plataforma="$(uname -s)"
+extra_params=""
+case "${plataforma}"
+in
+  Linux)
+    extra_params="$extra_params --provider libvirt"
+    echo se usara libvirt como proveedor
+    ;;
+  Darwin)
+    extra_params="$extra_params --provider virtualbox"
+    echo se usara virtualbox como proveedor
+    ;;
+  *)
+    echo "la plataforma ${plataforma} no está soportada"
+    exit 1
+    ;;
+esac
+
+vagrant up $extra_params && vagrant ssh -c "sudo su - ${USER}"

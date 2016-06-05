@@ -2,15 +2,7 @@
 
 Crea un ambiente de trabajo estándar para la OAS usando Vagrant.
 
-## ¡Advertencia!
-
-Tus archivos
-
- - `~/.gnupg/`
- - `~/.ssh/id_rsa`
- - `~/.rpmmacros`
-
-Serán copiados dentro de la VM de Vagrant. Y para tener un ambiente funcional debes contar al menos con estos archivos.
+## Preparaciones
 
 Lee guías en Internet sobre como crear tu llave de GPG, y cómo crear un par de llaves de SSH. El archivo `~/.rpmmacros` es necesario para firmar digitalmente los paquetes que desarrolles, el contenido inicial podría ser.
 
@@ -26,10 +18,10 @@ Lee guías en Internet sobre como crear tu llave de GPG, y cómo crear un par de
 Simplemente ejecuta:
 
 ```
-vagrant up
+./enter
 ```
 
-Para subir tu VM.
+Para subir y entrar a tu VM.
 
 ```
 vagrant ssh
@@ -59,7 +51,7 @@ Lee más sobre Vagrant en https://www.vagrantup.com/
 
 ## Acceso a tu VM
 
-Accede a tu VM por medio de la dirección => `oasworkspace.192.168.12.37.xip.io`
+Accede a tu VM por medio de la dirección => `NOMBRE_DE_USUARIO.192.168.12.37.xip.io`
 
 ## Contribuciones
 

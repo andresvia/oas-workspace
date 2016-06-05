@@ -1,0 +1,4 @@
+project_name: oas-workspace
+project_description: Crea un ambiente de trabajo estándar para la OAS usando Vagrant.
+project_purpose: Contar con un ambiente de trabajo fácil de iniciar y móvil.
+organizational_unit: Plataforma

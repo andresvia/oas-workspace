@@ -1,18 +1,37 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-proxy = "#{ENV["http_proxy"]}"
+user = ENV["USER"]
+group = `id -g -n`.chop
+home = ENV["HOME"]
+shell = ENV["SHELL"]
+proxy = ENV["http_proxy"]
+no_proxy = ENV["no_proxy"]
 
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
-  config.vm.hostname = "oasworkspace.192.168.12.37.xip.io"
+  config.vm.hostname = "#{user}.192.168.12.37.xip.io"
   config.vm.network "private_network", ip: "192.168.12.37"
-  config.vm.provision "file", source: "utils/oasenvtool", destination: "/tmp/oasenvtool"
-  config.vm.provision "shell", inline: "sudo /tmp/oasenvtool -n http_proxy -v '#{proxy}'"
-  config.vm.provision "shell", inline: "sudo /tmp/oasenvtool -n https_proxy -v '#{proxy}'"
-  config.vm.provision "shell", inline: "rm -rfv /tmp/host_gnupg /tmp/oasenvtool"
-  config.vm.provision "file", source: "#{ENV['HOME']}/.gnupg", destination: "/tmp/host_gnupg"
-  config.vm.provision "file", source: "#{ENV['HOME']}/.ssh/id_rsa", destination: "/tmp/host_ssh_id_rsa"
-  config.vm.provision "file", source: "#{ENV['HOME']}/.rpmmacros", destination: "/tmp/host_rpmmacros"
-  config.vm.provision "shell", path: "installer.sh"
+  config.vm.synced_folder home, home, type: "nfs"
+  config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
+  config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
+    "environment_name": "http_proxy",
+    "environment_value": proxy,
+  }
+  config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
+    "environment_name": "https_proxy",
+    "environment_value": proxy,
+  }
+  config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
+    "environment_name": "no_proxy",
+    "environment_value": no_proxy,
+  }
+  config.vm.provision "shell", path: "scripts/installer", run: "always", env: {
+    "HOST_USER": user,
+    "HOST_GROUP": group,
+    "HOST_HOME": home,
+    "HOST_UID": Process.uid,
+    "HOST_GID": Process.gid,
+    "HOST_SHELL": shell,
+  }
 end
