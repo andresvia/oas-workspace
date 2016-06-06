@@ -61,7 +61,7 @@ Lee más sobre Vagrant en https://www.vagrantup.com/
 
 ## Acceso a tu VM
 
-Accede a tu VM por medio de la dirección => `NOMBRE_DE_USUARIO.192.168.12.37.xip.io`
+Accede a tu VM por medio de la dirección => `192.168.12.37.xip.io`
 
 ## Contribuciones
 
