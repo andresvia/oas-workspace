@@ -10,7 +10,7 @@ no_proxy = ENV["no_proxy"]
 
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
-  config.vm.hostname = "192.168.12.37.xip.io"
+  config.vm.hostname = "#{user}.192.168.12.37.xip.io"
   config.vm.network "private_network", ip: "192.168.12.37"
   config.vm.synced_folder home, home, type: "nfs"
   config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true

@@ -2,7 +2,10 @@
 
 set -eu
 
+vagrant_version="$(vagrant --version)"
+echo "Requiere por lo menos Vagrant 1.8.1, versión encontrada: ${vagrant_version}"
 echo "Vagrant necesita poder ejecutar los siguientes comandos con privilegios de administrador (sudo) /usr/bin/sed y /usr/bin/tee"
+echo "Se requiere un servidor de NFS (Servidor de archivos/File server) funcionando e iniciado"
 
 plataforma="$(uname -s)"
 extra_params=""
