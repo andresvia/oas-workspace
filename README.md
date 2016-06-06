@@ -1,10 +1,20 @@
 # OAS Workspace
 
-Crea un ambiente de trabajo estándar para la OAS usando Vagrant.
+Crea un ambiente de trabajo estándar para la OAS usando [Vagrant](https://www.vagrantup.com/). En plataformas **Linux** utiliza `libvirt` y en plataformas **Darwin** utiliza `VirtualBox`. El directorio `$HOME` del usuario será montado vía NFS dentro de la VM. Por lo tanto Vagrant necesitará cambiar la configuración de NFS (`/etc/exports`) para esto utiliza los comandos `/usr/bin/sed` y `/usr/bin/tee` ejecutados con `sudo`. Por lo cual tu usuario debe tener los privilegios para al menos ejecutar estos dos comandos como `root` y el software listado en la sección **Requerimientos**.
+
+## Requerimientos
+
+- Vagrant
+- Linux
+  - libvirt
+- Darwin
+  - VirtualBox
 
 ## Preparaciones
 
-Lee guías en Internet sobre como crear tu llave de GPG, y cómo crear un par de llaves de SSH. El archivo `~/.rpmmacros` es necesario para firmar digitalmente los paquetes que desarrolles, el contenido inicial podría ser.
+Leer guías en Internet sobre como crear tu llave de GPG, y cómo crear un par de llaves de SSH.
+
+El archivo `~/.rpmmacros` es necesario para firmar digitalmente los paquetes que desarrolles, el contenido inicial puede ser:
 
 ```
 %_signature gpg
