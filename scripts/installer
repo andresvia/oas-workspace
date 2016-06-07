@@ -30,6 +30,7 @@ then
   then
     extra_params="${extra_params} -u ${HOST_UID}"
   fi
+  mkdir -p "$(dirname "${HOST_HOME}")"
   useradd $extra_params -d "${HOST_HOME}" -g "${HOST_GID}" -G vagrant,docker,libvirt "${HOST_USER}"
 fi
 

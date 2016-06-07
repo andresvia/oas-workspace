@@ -19,6 +19,7 @@ Vagrant.configure(2) do |config|
   if oas_workspace != "true"
     config.vm.hostname = "#{user}.192.168.12.37.xip.io"
     config.vm.network "private_network", ip: "192.168.12.37"
+    config.vm.synced_folder home, home, type: "nfs"
   else
     config.vm.hostname = "#{user}.192.168.13.37.xip.io"
     config.vm.network "private_network", ip: "192.168.13.37"
@@ -26,7 +27,6 @@ Vagrant.configure(2) do |config|
       v.driver = "qemu"
     end
   end
-  config.vm.synced_folder home, home, type: "nfs"
   config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
   config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
     "environment_name": "http_proxy",
