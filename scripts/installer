@@ -42,8 +42,19 @@ fi
 if [ ! -e /usr/local/bin/drone ]
 then
   pushd /tmp
-  curl -s http://downloads.drone.io/drone-cli/drone_linux_amd64.tar.gz | tar zx
+  curl -s "http://downloads.drone.io/drone-cli/drone_linux_amd64.tar.gz" | tar zx
   install -t /usr/local/bin drone
   rm drone
   popd
+fi
+
+# si la plataforma original no es linux, inception
+if [ "${HOST_UNAME_S}" != "Linux" ] && ! rpm -q vagrant | grep "1.8.1" > /dev/null
+then
+  yum install -y "https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.rpm"
+  if ! rpm -q vagrant > /dev/null
+  then
+    echo "no se pudo instalar Vagrant"
+    exit 1
+  fi
 fi

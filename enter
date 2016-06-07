@@ -14,6 +14,18 @@ in
   Linux)
     extra_params="$extra_params --provider libvirt"
     echo Se usará libvirt como proveedor
+    if ! vagrant plugin list | grep libvirt > /dev/null
+    then
+      if which yum > /dev/null
+      then
+        sudo yum install libxslt-devel libxml2-devel libvirt-devel libguestfs-tools-c ruby-devel
+      fi
+      if which apt-get > /dev/null
+      then
+        sudo apt-get install libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+      fi
+      vagrant plugin install vagrant-libvirt
+    fi
     ;;
   Darwin)
     extra_params="$extra_params --provider virtualbox"
