@@ -19,13 +19,12 @@ Vagrant.configure(2) do |config|
   if oas_workspace != "true"
     config.vm.hostname = "#{user}.192.168.12.37.xip.io"
     config.vm.network "private_network", ip: "192.168.12.37"
+  else
+    config.vm.hostname = "#{user}.192.168.13.37.xip.io"
+    config.vm.network "private_network", ip: "192.168.13.37"
     config.vm.provider "libvirt" do |v|
       v.driver = "qemu"
     end
-  end
-  config.vm.provider "libvirt" do |v|
-    v.memory = libvirt_memory.to_i
-    v.cpus = libvirt_cpus.to_i
   end
   config.vm.synced_folder home, home, type: "nfs"
   config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
@@ -57,5 +56,9 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = vbox_memory.to_i
     v.cpus = vbox_cpus.to_i
+  end
+  config.vm.provider "libvirt" do |v|
+    v.memory = libvirt_memory.to_i
+    v.cpus = libvirt_cpus.to_i
   end
 end
