@@ -8,11 +8,14 @@ shell = ENV["SHELL"]
 proxy = ENV["http_proxy"]
 no_proxy = ENV["no_proxy"]
 uname_s = `uname -s`.chop
+oas_workspace = ENV["oas_workspace"]
 
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
-  config.vm.hostname = "#{user}.192.168.12.37.xip.io"
-  config.vm.network "private_network", ip: "192.168.12.37"
+  if oas_workspace != "true"
+    config.vm.hostname = "#{user}.192.168.12.37.xip.io"
+    config.vm.network "private_network", ip: "192.168.12.37"
+  end
   config.vm.synced_folder home, home, type: "nfs"
   config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
   config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
@@ -27,6 +30,10 @@ Vagrant.configure(2) do |config|
     "environment_name": "no_proxy",
     "environment_value": no_proxy,
   }
+  config.vm.provision "shell", path: "scripts/oasenvtool", run: "always", env: {
+    "environment_name": "oas_workspace",
+    "environment_value": "true",
+  }
   config.vm.provision "shell", path: "scripts/installer", run: "always", env: {
     "HOST_USER": user,
     "HOST_GROUP": group,
@@ -39,5 +46,8 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
     v.cpus = 2
+  end
+  config.vm.provider "libvirt" do |v|
+    v.driver = "qemu"
   end
 end

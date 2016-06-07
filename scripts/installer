@@ -15,6 +15,10 @@ if ! egrep "^docker:" /etc/group > /dev/null
 then
   groupadd -r docker
 fi
+if ! egrep "^libvirt:" /etc/group > /dev/null
+then
+  groupadd -r libvirt
+fi
 if ! egrep "^${HOST_USER}:" /etc/passwd > /dev/null
 then
   extra_params=""
@@ -26,7 +30,7 @@ then
   then
     extra_params="${extra_params} -u ${HOST_UID}"
   fi
-  useradd $extra_params -d "${HOST_HOME}" -g "${HOST_GID}" -G vagrant,docker "${HOST_USER}"
+  useradd $extra_params -d "${HOST_HOME}" -g "${HOST_GID}" -G vagrant,docker,libvirt "${HOST_USER}"
 fi
 
 # instalar el paquete oasproj

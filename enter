@@ -16,14 +16,16 @@ in
     echo Se usará libvirt como proveedor
     if ! vagrant plugin list | grep libvirt > /dev/null
     then
+      set -x
       if which yum > /dev/null
       then
-        sudo yum install libxslt-devel libxml2-devel libvirt-devel libguestfs-tools-c ruby-devel
+        sudo yum install -y libxslt-devel libxml2-devel libvirt-devel libguestfs-tools-c ruby-devel
       fi
       if which apt-get > /dev/null
       then
-        sudo apt-get install libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+        sudo apt-get install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
       fi
+      sudo systemctl start libvirtd
       vagrant plugin install vagrant-libvirt
     fi
     ;;

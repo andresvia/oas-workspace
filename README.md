@@ -1,6 +1,6 @@
 # OAS Workspace
 
-Crea un ambiente de trabajo estándar para la OAS usando [Vagrant](https://www.vagrantup.com/). En plataformas **Linux** utiliza `libvirt` y en plataformas **Darwin** utiliza `VirtualBox`. El directorio `$HOME` del usuario será montado vía NFS dentro de la VM. Por lo tanto Vagrant necesitará cambiar la configuración de NFS (`/etc/exports`) para esto utiliza los comandos `/usr/bin/sed` y `/usr/bin/tee` ejecutados con `sudo`. Por lo cual tu usuario debe tener los privilegios para al menos ejecutar estos dos comandos como `root` y el software listado en la sección **Requerimientos**.
+Crea un ambiente de trabajo estándar para la OAS usando [Vagrant](https://www.vagrantup.com/). En plataformas **Linux** utiliza `libvirt` y en plataformas **Darwin** utiliza `VirtualBox`. El directorio `$HOME` del usuario será montado vía NFS dentro de la VM. Por lo tanto Vagrant necesitará cambiar la configuración de NFS (`/etc/exports`) para esto utiliza los comandos `/usr/bin/sed` y `/usr/bin/tee` ejecutados con `sudo`. Por lo cual tu usuario debe tener los privilegios para al menos ejecutar estos dos comandos como `root` y lo listado en la sección **Requerimientos**.
 
 ## Requerimientos
 
@@ -9,8 +9,10 @@ Crea un ambiente de trabajo estándar para la OAS usando [Vagrant](https://www.v
   - libvirt
 - Darwin
   - VirtualBox
+- Para usar el proveedor VirtualBox al menos 4GB libres de RAM.
+- Para usar el proveedor libvirt poder ejecutar `yum` o `apt-get` (dependiendo de la plataforma original) con `sudo` como root. (para la instalación del plugin de libvirt para Vagrant) y pertener al grupo `libvirt`.
 
-## Preparaciones
+## Preparación
 
 Leer guías en Internet sobre como crear tu llave de GPG, y cómo crear un par de llaves de SSH.
 
